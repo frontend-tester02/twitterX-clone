@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { Dialog, DialogContent } from './dialog'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 interface ModalProps {
 	isOpen?: boolean
@@ -30,6 +31,7 @@ export default function Modal({
 					isEditing && 'h-[80vh] overflow-x-hidden overflow-y-auto'
 				)}
 			>
+				<DialogTitle />
 				<div className='flex items-center gap-6'>
 					<button className='p-1 border-0 text-white hover:opacity-70 transition w-fit'>
 						<X size={28} onClick={onClose} />
