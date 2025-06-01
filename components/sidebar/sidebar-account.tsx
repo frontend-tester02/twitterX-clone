@@ -55,9 +55,9 @@ const SidebarAccount = ({ user }: Props) => {
 						<MoreHorizontal size={24} color='white' />
 					</div>
 				</PopoverTrigger>
-				<PopoverContent className='bg-black border-none rounded-md shadow shadow-white px-0 mb-3'>
+				<PopoverContent className='rounded-md hover:bg-secondary'>
 					<div
-						className='font-bold rounded-md text-white cursor-pointer hover:bg-blue-500 hover:bg-opacity-10 p-2 transition'
+						className='font-bold rounded-md text-white cursor-pointer transition'
 						onClick={() => signOut()}
 					>
 						Log out{' '}
