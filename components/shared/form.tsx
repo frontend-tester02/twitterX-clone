@@ -22,7 +22,7 @@ const Form = ({ placeholder, user, setPosts }: Props) => {
 				body,
 				userId: user._id,
 			})
-			const newPost = { ...data, user }
+			const newPost = { ...data, user, likes: 0, hasLikes: false, comments: 0 }
 			setPosts(prev => [newPost, ...prev])
 			setIsLoading(false)
 			setBody('')

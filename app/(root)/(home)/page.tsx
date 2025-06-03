@@ -30,7 +30,7 @@ const Page = () => {
 	}, [])
 	return (
 		<>
-			<Header label='Home' isBack />
+			<Header label='Home' />
 			{isLoading ? (
 				<div className='flex justify-center items-center h-24'>
 					<Loader2 className='animate-spin text-sky-500' />

@@ -18,6 +18,7 @@ interface Props {
 
 const PostItem = ({ post, user, setPosts }: Props) => {
 	const [isLoading, setIsLoading] = useState(false)
+
 	const onDelete = async () => {
 		try {
 			setIsLoading(true)
@@ -27,6 +28,39 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 				},
 			})
 			setPosts(prev => prev.filter(p => p._id !== post._id))
+			setIsLoading(false)
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		} catch (error) {
+			setIsLoading(false)
+			return toast('Something went wrong. Please try again later.')
+		}
+	}
+
+	const onLike = async () => {
+		try {
+			setIsLoading(true)
+			if (post.hasLiked) {
+				await axios.delete('/api/likes', {
+					data: {
+						postId: post._id,
+						userId: user._id,
+					},
+				})
+
+				const updatedPosts = { ...post, hasLiked: false, likes: post.likes - 1 }
+
+				setPosts(prev => prev.map(p => (p._id === post._id ? updatedPosts : p)))
+			} else {
+				await axios.put('/api/likes', {
+					postId: post._id,
+					userId: user._id,
+				})
+
+				const updatedPosts = { ...post, hasLiked: true, likes: post.likes + 1 }
+
+				setPosts(prev => prev.map(p => (p._id === post._id ? updatedPosts : p)))
+			}
+
 			setIsLoading(false)
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (error) {
@@ -74,8 +108,9 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 						<div
 							className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
 							role='button'
+							onClick={onLike}
 						>
-							<FaHeart size={20} />
+							<FaHeart size={20} color={post.hasLiked ? 'red' : ''} />
 							<p>{post.likes || 0}</p>
 						</div>
 
