@@ -40,13 +40,13 @@ const SidebarAccount = ({ user }: Props) => {
 					<div className='flex justify-between items-center gap-2'>
 						<div className='flex gap-2 items-center'>
 							<Avatar>
-								<AvatarImage src={data?.currentUser?.profileImage} />
-								<AvatarFallback>{data?.currentUser?.name[0]}</AvatarFallback>
+								<AvatarImage src={user.profileImage} />
+								<AvatarFallback>{user.name[0]}</AvatarFallback>
 							</Avatar>
 							<div className='flex flex-col items-start text-white'>
-								<p>{data?.currentUser?.name}</p>
-								{data?.currentUser?.username ? (
-									<p className='opacity-40'>@{data?.currentUser?.username}</p>
+								<p>{user.name}</p>
+								{user.username ? (
+									<p className='opacity-40'>@{user.username}</p>
 								) : (
 									<p className='opacity-40'>Manage account</p>
 								)}
@@ -60,10 +60,7 @@ const SidebarAccount = ({ user }: Props) => {
 						className='font-bold rounded-md text-white cursor-pointer transition'
 						onClick={() => signOut()}
 					>
-						Log out{' '}
-						{data?.currentUser?.username
-							? `@${data?.currentUser?.username}`
-							: data?.currentUser?.name}
+						Log out {user.username ? `@${user.username}` : user.name}
 					</div>
 				</PopoverContent>
 			</Popover>

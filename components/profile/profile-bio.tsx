@@ -8,11 +8,15 @@ import { IoLocationSharp } from 'react-icons/io5'
 import { BiCalendar } from 'react-icons/bi'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import EditModal from '../modals/edit-modal'
+import useEditModal from '@/hooks/useEditModal'
 
 const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 	const [isLoading, setIsLoading] = useState(false)
 
 	const router = useRouter()
+
+	const editModal = useEditModal()
 
 	const onFollow = async () => {
 		try {
@@ -44,6 +48,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 	}
 	return (
 		<>
+			<EditModal user={user} />
 			<div className='border-b-[1px] border-neutral-800 pb-4'>
 				<div className='flex justify-end p-2'>
 					{userId === user._id ? (
@@ -51,6 +56,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 							label={'Edit profile'}
 							secondary
 							classNames='cursor-pointer'
+							onClick={() => editModal.onOpen()}
 						/>
 					) : user.isFollowing ? (
 						<Button
