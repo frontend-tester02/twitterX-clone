@@ -5,12 +5,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { sliceText } from '@/lib/utils'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { AiFillDelete, AiOutlineMessage } from 'react-icons/ai'
-import { FaHeart } from 'react-icons/fa'
+// import { FaHeart } from 'react-icons/fa'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+// import { CiHeart } from 'react-icons/ci'
+import { IoMdHeartEmpty } from 'react-icons/io'
 
 interface Props {
 	post: IPost
@@ -123,7 +125,9 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 							role='button'
 							onClick={onLike}
 						>
-							<FaHeart size={20} color={post.hasLiked ? 'red' : ''} />
+							{/* <FaHeart size={20} color={post.hasLiked ? 'red' : ''} /> */}
+							{/* <CiHeart size={22} color={post.hasLiked ? 'red' : ''} /> */}
+							<IoMdHeartEmpty size={22} color={post.hasLiked ? 'red' : ''} />
 							<p>{post.likes || 0}</p>
 						</div>
 

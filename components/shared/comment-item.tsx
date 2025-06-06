@@ -50,7 +50,7 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
 
 				const updatedComments = comments.map(c => {
 					if (c._id === comment._id) {
-						return { ...c, hasLiked: false, likes: c.likes + 1 }
+						return { ...c, hasLiked: true, likes: c.likes + 1 }
 					}
 					return c
 				})
