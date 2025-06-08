@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { IPost, IUser } from '@/types'
 import { Loader2 } from 'lucide-react'
@@ -8,6 +9,7 @@ import { FaHeart } from 'react-icons/fa'
 import { AiFillDelete } from 'react-icons/ai'
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 interface Props {
 	comment: IPost
@@ -18,6 +20,7 @@ interface Props {
 
 const CommentItem = ({ comment, user, setComments, comments }: Props) => {
 	const [isLoading, setIsLoading] = useState(false)
+	const router = useRouter()
 
 	const onDelete = async () => {
 		try {
@@ -62,6 +65,11 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
 			setIsLoading(false)
 		}
 	}
+
+	const goToProfile = (e: any) => {
+		e.stopPropagation()
+		router.push(`/profile/${user._id}`)
+	}
 	return (
 		<div className='border-b-[1px] relative border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition'>
 			{isLoading && (
@@ -72,13 +80,16 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
 				</div>
 			)}
 			<div className='flex flex-row items-center gap-3'>
-				<Avatar>
+				<Avatar onClick={goToProfile}>
 					<AvatarImage src={comment?.user.profileImage} />
 					<AvatarFallback>{comment?.user.name[0]}</AvatarFallback>
 				</Avatar>
 
 				<div>
-					<div className='flex flex-row items-center gap-2'>
+					<div
+						className='flex flex-row items-center gap-2'
+						onClick={goToProfile}
+					>
 						<p className='text-white font-semibold cursor-pointer hover:underline'>
 							{comment?.user.name}
 						</p>

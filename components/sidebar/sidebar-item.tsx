@@ -1,6 +1,7 @@
 'use client'
 import { LucideIcon } from 'lucide-react'
 import React from 'react'
+import { BsDot } from 'react-icons/bs'
 
 interface Props {
 	label: string
@@ -25,6 +26,9 @@ const SidebarItem = ({ icon: Icon, label, notification, path }: Props) => {
 			>
 				<Icon size={24} color='white' />
 				<p className='hidden lg:block text-xl text-white'>{label}</p>
+				{notification ? (
+					<BsDot className={'text-sky-500 absolute -top-4 left-0'} size={70} />
+				) : null}
 			</div>
 		</div>
 	)

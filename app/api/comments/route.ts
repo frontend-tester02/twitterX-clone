@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Comment from '@/database/comment.model'
+import Notification from '@/database/notification.model'
 import Post from '@/database/post.model'
+import User from '@/database/user.model'
 import { authOptions } from '@/lib/auth-options'
 import { connectToDatabase } from '@/lib/mongoose'
 import { getServerSession } from 'next-auth'
@@ -16,9 +18,21 @@ export async function POST(req: Request) {
 			post: postId,
 			user: userId,
 		})
-		await Post.findByIdAndUpdate(postId, {
+		const post = await Post.findByIdAndUpdate(postId, {
 			$push: { comments: comment._id },
 		})
+
+		const user = await User.findById(userId)
+
+		await Notification.create({
+			user: String(post.user),
+			body: `${user.name || user.userName} replied on your post!`,
+		})
+
+		await User.findOneAndUpdate(
+			{ _id: String(post.user) },
+			{ $set: { hasNewNotifications: true } }
+		)
 
 		return NextResponse.json(comment)
 	} catch (error) {
@@ -36,6 +50,18 @@ export async function PUT(req: Request) {
 		const comment = await Comment.findByIdAndUpdate(commentId, {
 			$push: { likes: currentUser._id },
 		})
+
+		await Notification.create({
+			user: String(comment.user),
+			body: `${
+				currentUser.name || currentUser.userName
+			} liked on your replied post!`,
+		})
+
+		await User.findOneAndUpdate(
+			{ _id: String(comment.user) },
+			{ $set: { hasNewNotifications: true } }
+		)
 
 		return NextResponse.json(comment)
 	} catch (error) {
